@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Shelp</string>
+    <string
+        name="reg_user"
+        >Register User</string>
+    <string name="contacts">Contacts</string>
+    <string name ="view_user">View User</string>
+    <string-array name="blood_grp">
+        <item>A+</item>
+        <item>B+</item>
+        <item>O+</item>
+        <item>AB+</item>
+        <item>A-</item>
+        <item>B-</item>
+        <item>O-</item>
+        <item>AB-</item>
+    </string-array>
+    <string name="View_name">Name :</string>
+    <string name="View_bgp">Blood Grp :</string>
+    <string name="View_phn">Phone No :</string>
+</resources>
