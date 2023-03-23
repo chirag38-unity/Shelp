@@ -1,10 +1,8 @@
 <resources>
     <string name="app_name">Shelp</string>
-    <string
-        name="reg_user"
-        >Register User</string>
+    <string name="reg_user">Register User</string>
     <string name="contacts">Contacts</string>
-    <string name ="view_user">View User</string>
+    <string name="view_user">View User</string>
     <string-array name="blood_grp">
         <item>A+</item>
         <item>B+</item>
@@ -18,4 +16,13 @@
     <string name="View_name">Name :</string>
     <string name="View_bgp">Blood Grp :</string>
     <string name="View_phn">Phone No :</string>
+    <string name="title_activity_contact_list">Contact_List</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>
