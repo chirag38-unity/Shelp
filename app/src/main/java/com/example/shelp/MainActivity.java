@@ -91,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                getLastLocation();
-                String add = "\nLatitude: " + Add_Latitude + "\nLongitude: " + Add_Longitude + "\nAddress: " + Add_Address + "\nCity: " + Add_City + "\nCountry: " + Add_Country;
+//                getLastLocation();
+                String add = "\nLatitude: " + UserData.getString("Latitude", null) + "\nLongitude: " + UserData.getString("Longitude", null) + "\nAddress: " + UserData.getString("Address", null) + "\nCity: " + UserData.getString("City", null) + "\nCountry: " + UserData.getString("Country", null);
                 String info =  "\nBloodGrp: " + blood_grp;
                 String msg = "Hello my name is " + name + "and I am in danger " + info + add ;
                 SmsManager smsManager = SmsManager.getDefault();
@@ -128,12 +128,19 @@ public class MainActivity extends AppCompatActivity {
                     if (location != null){
                         Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
                         try {
+                            SharedPreferences.Editor editor = UserData.edit();
                             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                             Add_Latitude = String.valueOf(location.getLatitude());
                             Add_Longitude = String.valueOf(location.getLongitude());
                             Add_Address = String.valueOf(addresses.get(0).getAddressLine(0));
                             Add_City = String.valueOf(addresses.get(0).getLocality());
                             Add_Country = String.valueOf(addresses.get(0).getCountryName());
+                            editor.putString("Latitude", Add_Latitude);
+                            editor.putString("Longitude", Add_Longitude);
+                            editor.putString("Address", Add_Address);
+                            editor.putString("City", Add_City);
+                            editor.putString("Country", Add_Country);
+                            editor.commit();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
