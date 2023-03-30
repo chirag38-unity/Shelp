@@ -28,7 +28,7 @@ public class Contacts extends AppCompatActivity implements ContactsDialog.Contac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
 
-        DB = new DBHelper(this);
+        DB = new DBHelper(this,"ContactsData.db", 1);
         name = new ArrayList<>();
         number = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerview);
@@ -53,9 +53,9 @@ public class Contacts extends AppCompatActivity implements ContactsDialog.Contac
             public void OnEntryDelete(String name) {
                 Boolean checkDeleteData = DB.deleteContact(name);
                 if(checkDeleteData == true){
-                    Toast.makeText(Contacts.this, "Contact Inserted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Contacts.this, "Contact Deleted", Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(Contacts.this, "Insertion failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Contacts.this, "Deletion failed", Toast.LENGTH_SHORT).show();
                 }
                 Intent I = new Intent(Contacts.this, Contacts.class);
                 Contacts.this.startActivity(I);
