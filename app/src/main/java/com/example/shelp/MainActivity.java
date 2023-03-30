@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String SHARED_PREF_NAME = "userdata";
     private static final String KEY_NAME = "name";
+    private static final String KEY_BGP = "blood-grp";
+    private static final String KEY_PHN = "phone-number";
     private final static int REQUEST_CODE = 100;
 
     DBHelper DB;
@@ -54,12 +56,19 @@ public class MainActivity extends AppCompatActivity {
         button_send_SOS = findViewById(R.id.send_SOS);
 
 //        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION))
-
+        getLastLocation();
         UserData = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
 
         String name = UserData.getString(KEY_NAME,null);
+        String blood_grp = UserData.getString(KEY_BGP, null);
+        String phone_no = UserData.getString(KEY_PHN, null);
         if(name != null){
             button_userdata.setText(R.string.view_user);
+        }
+        if(name == null){
+            Toast.makeText(this, "Add User Details please...", Toast.LENGTH_SHORT).show();
+            Intent I = new Intent(MainActivity.this, UserDetails_register.class);
+            MainActivity.this.startActivity(I);
         }
 
         button_userdata.setOnClickListener(new View.OnClickListener() {
@@ -87,12 +96,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String msg = "Hello Im in danger";
+                getLastLocation();
+                String add = "Latitude: " + Add_Latitude + " Longitude: " + Add_Longitude + " Address: " + Add_Address + " City: " + Add_City + " Country: " + Add_Country;
+                String info = "Name: " + name + " BloodGrp: " + blood_grp;
+                String msg = "Hello Im in danger " + info + add ;
                 SmsManager smsManager = SmsManager.getDefault();
                 Cursor cursor = DB.getdata();
 
                 try{
-                    getLastLocation();
+
                     if(cursor != null){
                         while (cursor.moveToNext()) {
                             number.add(cursor.getString(1));
@@ -115,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getLastLocation() {
-        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             fusedLocationProvideClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
@@ -127,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                             Add_Longitude = String.valueOf(addresses.get(0).getLongitude());
                             Add_Address = String.valueOf(addresses.get(0).getAddressLine(0));
                             Add_City = String.valueOf(addresses.get(0).getLocality());
-                            Add_City = String.valueOf(addresses.get(0).getCountryName());
+                            Add_Country = String.valueOf(addresses.get(0).getCountryName());
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -140,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void askPermission() {
-        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+        ActivityCompat.requestPermissions(MainActivity.this, new String[] {android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
     }
 
     @Override
